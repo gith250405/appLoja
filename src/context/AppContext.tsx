@@ -24,7 +24,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [favoritos, setFavoritos] = useState<string[]>([]);
 
   const entrar = useCallback((email: string) => {
-    // nome de usuário = parte do e-mail antes do @
     setUsuario({ nome: email.split('@')[0], email });
   }, []);
 
