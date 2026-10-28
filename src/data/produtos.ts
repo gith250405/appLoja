@@ -1,4 +1,3 @@
-
 export type Produto = {
   id: string;
   nome: string;
@@ -7,7 +6,7 @@ export type Produto = {
   imagem?: string;
 };
 
-export const PRODUTOS: Produto[] = [
+export const JVFPRODUTOS: Produto[] = [
   {
     id: '1',
     nome: 'Kit Alto Falantes 6 Polegadas Jbl Selenium 6trfx50 100w Rms',
@@ -38,5 +37,5 @@ export const PRODUTOS: Produto[] = [
   },
 ];
 
-export const getProdutoPorId = (id?: string) =>
-  PRODUTOS.find((p) => p.id === id);
+export const JVFgetProdutoPorId = (JVFid?: string) =>
+  JVFPRODUTOS.find((JVFp) => JVFp.id === JVFid);
