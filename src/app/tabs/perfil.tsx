@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import { JVFPRODUTOS } from '../../data/produtos';
 import { useJVFApp } from '../../context/AppContext';
 
-const JVFFOTO_PERFIL = 'https://picsum.photos/seed/perfil/300/300';
+const JVFFOTO_PERFIL = '../../assets/demo_van.jpg';
 
 export default function JVFPerfil() {
   const JVFrouter = useRouter();
