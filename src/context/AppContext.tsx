@@ -13,7 +13,7 @@ type AppContextType = {
 
 const JVFAppContext = createContext<AppContextType | undefined>(undefined);
 
-export function AppProvider({ children: JVFchildren }: { children: React.ReactNode }) {
+export function JVFAppProvider({ children: JVFchildren }: { children: React.ReactNode }) {
   const [JVFusuario, JVFsetUsuario] = useState<Usuario | null>(null);
   const [JVFfavoritos, JVFsetFavoritos] = useState<string[]>([]);
 
@@ -51,8 +51,8 @@ export function AppProvider({ children: JVFchildren }: { children: React.ReactNo
   return <JVFAppContext.Provider value={JVFvalue}>{JVFchildren}</JVFAppContext.Provider>;
 }
 
-export function useApp() {
+export function useJVFApp() {
   const JVFctx = useContext(JVFAppContext);
-  if (!JVFctx) throw new Error('useApp deve ser usado dentro de <AppProvider>');
+  if (!JVFctx) throw new Error('useJVFApp deve ser usado dentro de <JVFAppProvider>');
   return JVFctx;
 }
