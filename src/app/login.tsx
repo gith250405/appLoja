@@ -3,14 +3,14 @@ import {StyleSheet,Text,View,Image,TextInput,TouchableOpacity,KeyboardAvoidingVi
         ScrollView,Platform,Alert,useWindowDimensions} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { useApp } from '../context/AppContext';
+import { useJVFApp } from '../context/AppContext';
 
 const JVFEMAIL_TESTE = 'teste@corneta.com';
 const JVFSENHA_TESTE = '123456';
 
-export default function TelaLogin() {
+export default function JVFTelaLogin() {
   const JVFrouter = useRouter();
-  const { entrar: JVFentrar } = useApp();
+  const { entrar: JVFentrar } = useJVFApp();
   const { height: JVFheight } = useWindowDimensions();
   const [JVFemail, JVFsetEmail] = useState<string>('');
   const [JVFsenha, JVFsetSenha] = useState<string>('');
