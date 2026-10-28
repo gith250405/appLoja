@@ -1,7 +1,7 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function TabsLayout() {
+export default function JVFTabsLayout() {
   return (
     <Tabs
       screenOptions={{
@@ -15,7 +15,7 @@ export default function TabsLayout() {
         tabBarLabelStyle: { fontSize: 12, fontWeight: '600' },
       }}
     >
-      {/* A ordem de declaração define a ordem das abas */}
+
       <Tabs.Screen
         name="produtos"
         options={{
