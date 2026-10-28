@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react';
+import React, {createContext,useCallback,useContext,useMemo,useState,} from 'react';
 
 type Usuario = { nome: string; email: string };
 
@@ -17,39 +11,48 @@ type AppContextType = {
   toggleFavorito: (id: string) => void;
 };
 
-const AppContext = createContext<AppContextType | undefined>(undefined);
+const JVFAppContext = createContext<AppContextType | undefined>(undefined);
 
-export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [usuario, setUsuario] = useState<Usuario | null>(null);
-  const [favoritos, setFavoritos] = useState<string[]>([]);
+export function AppProvider({ children: JVFchildren }: { children: React.ReactNode }) {
+  const [JVFusuario, JVFsetUsuario] = useState<Usuario | null>(null);
+  const [JVFfavoritos, JVFsetFavoritos] = useState<string[]>([]);
 
-  const entrar = useCallback((email: string) => {
-    setUsuario({ nome: email.split('@')[0], email });
+  const JVFentrar = useCallback((JVFemail: string) => {
+    JVFsetUsuario({ nome: JVFemail.split('@')[0], email: JVFemail });
   }, []);
 
-  const sair = useCallback(() => setUsuario(null), []);
+  const JVFsair = useCallback(() => JVFsetUsuario(null), []);
 
-  const toggleFavorito = useCallback((id: string) => {
-    setFavoritos((atual) =>
-      atual.includes(id) ? atual.filter((f) => f !== id) : [...atual, id]
+  const JVFtoggleFavorito = useCallback((JVFid: string) => {
+    JVFsetFavoritos((JVFatual) =>
+      JVFatual.includes(JVFid)
+        ? JVFatual.filter((JVFf) => JVFf !== JVFid)
+        : [...JVFatual, JVFid]
     );
   }, []);
 
-  const isFavorito = useCallback(
-    (id: string) => favoritos.includes(id),
-    [favoritos]
+  const JVFisFavorito = useCallback(
+    (JVFid: string) => JVFfavoritos.includes(JVFid),
+    [JVFfavoritos]
   );
 
-  const value = useMemo(
-    () => ({ usuario, entrar, sair, favoritos, isFavorito, toggleFavorito }),
-    [usuario, entrar, sair, favoritos, isFavorito, toggleFavorito]
+  const JVFvalue = useMemo(
+    () => ({
+      usuario: JVFusuario,
+      entrar: JVFentrar,
+      sair: JVFsair,
+      favoritos: JVFfavoritos,
+      isFavorito: JVFisFavorito,
+      toggleFavorito: JVFtoggleFavorito,
+    }),
+    [JVFusuario, JVFentrar, JVFsair, JVFfavoritos, JVFisFavorito, JVFtoggleFavorito]
   );
 
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+  return <JVFAppContext.Provider value={JVFvalue}>{JVFchildren}</JVFAppContext.Provider>;
 }
 
 export function useApp() {
-  const ctx = useContext(AppContext);
-  if (!ctx) throw new Error('useApp deve ser usado dentro de <AppProvider>');
-  return ctx;
+  const JVFctx = useContext(JVFAppContext);
+  if (!JVFctx) throw new Error('useApp deve ser usado dentro de <AppProvider>');
+  return JVFctx;
 }
