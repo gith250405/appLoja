@@ -1,18 +1,11 @@
-import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
+//(tabs)/produtos.tsx
+import {StyleSheet,Text,View,Image,FlatList,TouchableOpacity,} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { PRODUTOS } from '../../data/produtos';
+import { JVFPRODUTOS } from '../../data/produtos';
 
-export default function Produtos() {
-  const router = useRouter();
+export default function JVFProdutos() {
+  const JVFrouter = useRouter();
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
@@ -21,14 +14,13 @@ export default function Produtos() {
       </View>
 
       <FlatList
-        data={PRODUTOS}
-        keyExtractor={(item) => item.id}
+        data={JVFPRODUTOS}
+        keyExtractor={(JVFitem) => JVFitem.id}
         contentContainerStyle={styles.list}
-        renderItem={({ item }) => (
+        renderItem={({ item: JVFitem }) => (
           <View style={styles.card}>
-            {/* Miniatura (50% da imagem da tela de detalhes) */}
             <Image
-              source={{ uri: item.imagem }}
+              source={{ uri: JVFitem.imagem }}
               style={styles.thumb}
               resizeMode="cover"
             />
@@ -36,20 +28,20 @@ export default function Produtos() {
             <View style={styles.info}>
               <View>
                 <Text style={styles.nome} numberOfLines={2}>
-                  {item.nome}
+                  {JVFitem.nome}
                 </Text>
                 <Text style={styles.descricao} numberOfLines={2}>
-                  {item.descricao}
+                  {JVFitem.descricao}
                 </Text>
               </View>
 
               <View style={styles.cardFooter}>
-                <Text style={styles.preco}>{item.preco}</Text>
+                <Text style={styles.preco}>{JVFitem.preco}</Text>
                 <TouchableOpacity
                   style={styles.detalhesButton}
                   activeOpacity={0.8}
                   onPress={() =>
-                    router.push({ pathname: '/produto', params: { id: item.id } })
+                    JVFrouter.push({ pathname: '/produto', params: { id: JVFitem.id } })
                   }
                 >
                   <Text style={styles.detalhesText}>Detalhes</Text>
@@ -72,22 +64,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 16,
   },
-  title: { fontSize: 24, fontWeight: 'bold', color: '#FFFFFF' },
-  list: { paddingHorizontal: 24, paddingBottom: 24, gap: 12 },
-  card: {
-    flexDirection: 'row',
-    backgroundColor: '#0F172A',
-    borderRadius: 20,
-    padding: 14,
-    gap: 14,
-    borderWidth: 1,
-    borderColor: '#334155',
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+  },
+  list: {
+    paddingHorizontal: 24,
+    paddingBottom: 24,
+    gap: 12,
   },
   thumb: {
     width: 140,
     height: 140,
     borderRadius: 14,
-    backgroundColor: '#1E293B', // aparece enquanto a imagem carrega
+    backgroundColor: '#1E293B',
   },
   info: {
     flex: 1,
@@ -103,14 +94,39 @@ const styles = StyleSheet.create({
     gap: 8,
     marginTop: 10,
   },
-  preco: { color: '#3B82F6', fontSize: 16, fontWeight: 'bold' },
+  card: {
+    flexDirection: 'row',
+    gap: 8,
+    alignItems: 'center',
+    backgroundColor: '#0F172A',
+    borderRadius: 20,
+    padding: 18,
+    borderWidth: 1,
+    borderColor: 'rgba(249, 115, 22, 0.55)',
+  },
+  preco: {
+    alignSelf: 'flex-start',
+    backgroundColor: 'rgba(249, 115, 22, 0.16)',
+    color: '#FDBA74',
+    fontSize: 15,
+    fontWeight: 'bold',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    overflow: 'hidden',
+    marginTop: 10,
+  },
   detalhesButton: {
-    backgroundColor: '#1E3A8A',
+    backgroundColor: '#2563EB',
     paddingVertical: 8,
     paddingHorizontal: 14,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#1D4ED8',
+    borderColor: '#3B82F6',
   },
-  detalhesText: { color: '#FFFFFF', fontSize: 13, fontWeight: 'bold' },
+  detalhesText: {
+    color: '#FFFFFF',
+    fontSize: 13,
+    fontWeight: 'bold',
+  },
 });
