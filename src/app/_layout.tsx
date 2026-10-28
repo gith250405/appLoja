@@ -1,10 +1,10 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { AppProvider } from '../context/AppContext';
+import { JVFAppProvider } from '../context/AppContext';
 
-export default function RootLayout() {
+export default function JVFRootLayout() {
   return (
-    <AppProvider>
+    <JVFAppProvider>
       <StatusBar style="light" />
       <Stack
         screenOptions={{
@@ -12,6 +12,6 @@ export default function RootLayout() {
           contentStyle: { backgroundColor: '#0B0F19' },
         }}
       />
-    </AppProvider>
+    </JVFAppProvider>
   );
 }
