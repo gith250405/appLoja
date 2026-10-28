@@ -1,42 +1,34 @@
-import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet,Text,View,Image,ScrollView,TouchableOpacity,} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { getProdutoPorId } from '../data/produtos';
+import { JVFgetProdutoPorId } from '../data/produtos';
 import { useApp } from '../context/AppContext';
 
 export default function Produto() {
-  const router = useRouter();
-  const { id } = useLocalSearchParams<{ id: string }>();
-  const produto = getProdutoPorId(id);
-  const { isFavorito, toggleFavorito } = useApp();
+  const JVFrouter = useRouter();
+  const { id: JVFid } = useLocalSearchParams<{ id: string }>();
+  const JVFproduto = JVFgetProdutoPorId(JVFid);
+  const { isFavorito: JVFisFavorito, toggleFavorito: JVFtoggleFavorito } = useApp();
 
-  const voltar = () => {
-    if (router.canGoBack()) {
-      router.back();
+  const JVFvoltar = () => {
+    if (JVFrouter.canGoBack()) {
+      JVFrouter.back();
     } else {
-      router.replace('../produtos');
+      JVFrouter.replace('../produtos');
     }
   };
 
-  const botaoVoltar = (
-    <TouchableOpacity onPress={voltar} activeOpacity={0.7} style={styles.backButton}>
+  const JVFbotaoVoltar = (
+    <TouchableOpacity onPress={JVFvoltar} activeOpacity={0.7} style={styles.backButton}>
       <Text style={styles.backText}>← Voltar</Text>
     </TouchableOpacity>
   );
 
-  if (!produto) {
+  if (!JVFproduto) {
     return (
       <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
-        <View style={styles.header}>{botaoVoltar}</View>
+        <View style={styles.header}>{JVFbotaoVoltar}</View>
         <View style={styles.notFound}>
           <Text style={styles.notFoundText}>Produto não encontrado.</Text>
         </View>
@@ -44,26 +36,25 @@ export default function Produto() {
     );
   }
 
-  const favorito = isFavorito(produto.id);
+  const JVFfavorito = JVFisFavorito(JVFproduto.id);
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
-      {/* Barra superior: voltar + favoritar */}
       <View style={styles.header}>
-        {botaoVoltar}
+        {JVFbotaoVoltar}
         <TouchableOpacity
-          onPress={() => toggleFavorito(produto.id)}
+          onPress={() => JVFtoggleFavorito(JVFproduto.id)}
           activeOpacity={0.7}
           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
           accessibilityRole="button"
           accessibilityLabel={
-            favorito ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
+            JVFfavorito ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
           }
         >
           <Ionicons
-            name={favorito ? 'heart' : 'heart-outline'}
+            name={JVFfavorito ? 'heart' : 'heart-outline'}
             size={28}
-            color={favorito ? '#EF4444' : '#FFFFFF'}
+            color={JVFfavorito ? '#EF4444' : '#FFFFFF'}
           />
         </TouchableOpacity>
       </View>
@@ -72,26 +63,23 @@ export default function Produto() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Imagem do produto */}
         <View style={styles.imageContainer}>
           <Image
-            source={{ uri: produto.imagem }}
+            source={{ uri: JVFproduto.imagem }}
             style={styles.image}
             resizeMode="cover"
           />
         </View>
 
-        {/* Informações */}
         <View style={styles.infoCard}>
-          <Text style={styles.nome}>{produto.nome}</Text>
-          <Text style={styles.preco}>{produto.preco}</Text>
+          <Text style={styles.nome}>{JVFproduto.nome}</Text>
+          <Text style={styles.preco}>{JVFproduto.preco}</Text>
 
           <Text style={styles.sectionLabel}>Descrição</Text>
-          <Text style={styles.descricao}>{produto.descricao}</Text>
+          <Text style={styles.descricao}>{JVFproduto.descricao}</Text>
         </View>
       </ScrollView>
 
-      {/* Botão de compra (sem ação por enquanto) */}
       <View style={styles.footer}>
         <TouchableOpacity style={styles.buyButton} activeOpacity={0.8}>
           <Text style={styles.buyButtonText}>Comprar</Text>
