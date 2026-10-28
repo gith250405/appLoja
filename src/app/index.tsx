@@ -1,22 +1,15 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  useWindowDimensions,
-} from 'react-native';
+import {StyleSheet,Text,View,Image,TouchableOpacity,useWindowDimensions} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 
 export default function TelaInicial() {
-  const router = useRouter();
-  const { height } = useWindowDimensions();
+  const JVFrouter = useRouter();
+  const { height: JVFheight } = useWindowDimensions();
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
-      <View style={[styles.imageContainer, { height: height * 0.52 }]}>
+      <View style={[styles.imageContainer, { height: JVFheight * 0.52 }]}>
         <Image
           source={require('../../assets/logo_carro.jpg')}
           style={styles.image}
@@ -33,7 +26,6 @@ export default function TelaInicial() {
           </Text>
         </View>
 
-
         <View style={styles.paginationContainer}>
           <View style={[styles.dot, styles.activeDot]} />
           <View style={styles.dot} />
@@ -42,7 +34,7 @@ export default function TelaInicial() {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => router.push('/login')}
+          onPress={() => JVFrouter.push('/login')}
           activeOpacity={0.8}
         >
           <Text style={styles.buttonText}>Começar</Text>
