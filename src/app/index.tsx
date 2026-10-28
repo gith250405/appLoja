@@ -3,7 +3,7 @@ import {StyleSheet,Text,View,Image,TouchableOpacity,useWindowDimensions} from 'r
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 
-export default function TelaInicial() {
+export default function JVFTelaInicial() {
   const JVFrouter = useRouter();
   const { height: JVFheight } = useWindowDimensions();
 
