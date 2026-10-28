@@ -1,42 +1,39 @@
-import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet,Text,View,Image,FlatList,TouchableOpacity,} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { PRODUTOS } from '../../data/produtos';
-import { useApp } from '../../context/AppContext';
+import { JVFPRODUTOS } from '../../data/produtos';
+import { useJVFApp } from '../../context/AppContext';
 
-// Foto de exemplo: troque pela URL da foto real do usuário
-const FOTO_PERFIL = 'https://picsum.photos/seed/perfil/300/300';
+const JVFFOTO_PERFIL = 'https://picsum.photos/seed/perfil/300/300';
 
-export default function Perfil() {
-  const router = useRouter();
-  const { usuario, favoritos, sair } = useApp();
+export default function JVFPerfil() {
+  const JVFrouter = useRouter();
+  const {
+    usuario: JVFusuario,
+    favoritos: JVFfavoritos,
+    sair: JVFsair,
+  } = useJVFApp();
 
-  const produtosFavoritos = PRODUTOS.filter((p) => favoritos.includes(p.id));
+  const JVFprodutosFavoritos = JVFPRODUTOS.filter((JVFp) =>
+    JVFfavoritos.includes(JVFp.id)
+  );
 
-  const handleSair = () => {
-    sair();
-    router.replace('/login');
+  const JVFhandleSair = () => {
+    JVFsair();
+    JVFrouter.replace('/login');
   };
 
-  const cabecalho = (
+  const JVFcabecalho = (
     <View>
       <View style={styles.perfilCard}>
-        <Image source={{ uri: FOTO_PERFIL }} style={styles.avatar} />
-        <Text style={styles.nome}>@{usuario?.nome ?? 'visitante'}</Text>
-        {usuario?.email ? <Text style={styles.email}>{usuario.email}</Text> : null}
+        <Image source={{ uri: JVFFOTO_PERFIL }} style={styles.avatar} />
+        <Text style={styles.nome}>@{JVFusuario?.nome ?? 'visitante'}</Text>
+        {JVFusuario?.email ? <Text style={styles.email}>{JVFusuario.email}</Text> : null}
 
         <TouchableOpacity
           style={styles.sairButton}
-          onPress={handleSair}
+          onPress={JVFhandleSair}
           activeOpacity={0.8}
         >
           <Ionicons name="log-out-outline" size={18} color="#F87171" />
@@ -45,7 +42,7 @@ export default function Perfil() {
       </View>
 
       <Text style={styles.sectionTitle}>
-        Produtos favoritos ({produtosFavoritos.length})
+        Produtos favoritos ({JVFprodutosFavoritos.length})
       </Text>
     </View>
   );
@@ -53,30 +50,30 @@ export default function Perfil() {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <FlatList
-        data={produtosFavoritos}
-        keyExtractor={(item) => item.id}
+        data={JVFprodutosFavoritos}
+        keyExtractor={(JVFitem) => JVFitem.id}
         contentContainerStyle={styles.list}
-        ListHeaderComponent={cabecalho}
+        ListHeaderComponent={JVFcabecalho}
         ListEmptyComponent={
           <Text style={styles.vazio}>
             Você ainda não favoritou nenhum produto. Toque no coração na página
             do produto para salvá-lo aqui.
           </Text>
         }
-        renderItem={({ item }) => (
+        renderItem={({ item: JVFitem }) => (
           <TouchableOpacity
             style={styles.favItem}
             activeOpacity={0.8}
             onPress={() =>
-              router.push({ pathname: '/produto', params: { id: item.id } })
+              JVFrouter.push({ pathname: '/produto', params: { id: JVFitem.id } })
             }
           >
-            <Image source={{ uri: item.imagem }} style={styles.favThumb} />
+            <Image source={{ uri: JVFitem.imagem }} style={styles.favThumb} />
             <View style={styles.favInfo}>
               <Text style={styles.favNome} numberOfLines={2}>
-                {item.nome}
+                {JVFitem.nome}
               </Text>
-              <Text style={styles.favPreco}>{item.preco}</Text>
+              <Text style={styles.favPreco}>{JVFitem.preco}</Text>
             </View>
             <Ionicons name="chevron-forward" size={20} color="#64748B" />
           </TouchableOpacity>
@@ -87,15 +84,23 @@ export default function Perfil() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0B0F19' },
-  list: { paddingHorizontal: 24, paddingTop: 16, paddingBottom: 24, gap: 12 },
+  container: {
+    flex: 1,
+    backgroundColor: '#0B0F19',
+  },
+  list: {
+    paddingHorizontal: 24,
+    paddingTop: 16,
+    paddingBottom: 24,
+    gap: 12,
+  },
   perfilCard: {
     alignItems: 'center',
     backgroundColor: '#0F172A',
     borderRadius: 24,
     padding: 24,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#554c33',
     marginBottom: 24,
   },
   avatar: {
@@ -112,7 +117,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 14,
   },
-  email: { color: '#94A3B8', fontSize: 14, marginTop: 4 },
+  email: {
+    color: '#94A3B8',
+    fontSize: 14,
+    marginTop: 4,
+  },
   sairButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -125,7 +134,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#334155',
   },
-  sairText: { color: '#F87171', fontSize: 15, fontWeight: 'bold' },
+  sairText: {
+    color: '#F87171',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
   sectionTitle: {
     color: '#FFFFFF',
     fontSize: 18,
@@ -154,8 +167,14 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: '#1E293B',
   },
-  favInfo: { flex: 1 },
-  favNome: { color: '#FFFFFF', fontSize: 15, fontWeight: 'bold' },
+  favInfo: {
+    flex: 1,
+  },
+  favNome: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
   favPreco: {
     color: '#3B82F6',
     fontSize: 14,
