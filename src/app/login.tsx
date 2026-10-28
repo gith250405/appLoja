@@ -1,46 +1,32 @@
 import React, { useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  ScrollView,
-  Platform,
-  Alert,
-  useWindowDimensions,
-} from 'react-native';
+import {StyleSheet,Text,View,Image,TextInput,TouchableOpacity,KeyboardAvoidingView,
+        ScrollView,Platform,Alert,useWindowDimensions} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { useApp } from '../context/AppContext'; 
+import { useApp } from '../context/AppContext';
 
-const EMAIL_TESTE = 'teste@corneta.com';
-const SENHA_TESTE = '123456';
+const JVFEMAIL_TESTE = 'teste@corneta.com';
+const JVFSENHA_TESTE = '123456';
 
 export default function TelaLogin() {
-  const router = useRouter();
-  const { entrar } = useApp();
-  const { height } = useWindowDimensions();
-  const [email, setEmail] = useState<string>('');
-  const [senha, setSenha] = useState<string>('');
+  const JVFrouter = useRouter();
+  const { entrar: JVFentrar } = useApp();
+  const { height: JVFheight } = useWindowDimensions();
+  const [JVFemail, JVFsetEmail] = useState<string>('');
+  const [JVFsenha, JVFsetSenha] = useState<string>('');
 
-  const handleLogin = () => {
-    const emailLimpo = email.trim();
+  const JVFhandleLogin = () => {
+    const JVFemailLimpo = JVFemail.trim();
 
-    if (!emailLimpo || !senha) {
+    if (!JVFemailLimpo || !JVFsenha) {
       Alert.alert('Atenção', 'Preencha e-mail e senha para continuar.');
       return;
     }
 
-// dentro do handleLogin, no caso de sucesso:
-if (emailLimpo === EMAIL_TESTE && senha === SENHA_TESTE) {
-  entrar(emailLimpo);
-  router.replace('/tabs/produtos');
-}
-    
-    else {
+    if (JVFemailLimpo === JVFEMAIL_TESTE && JVFsenha === JVFSENHA_TESTE) {
+      JVFentrar(JVFemailLimpo);
+      JVFrouter.replace('/tabs/produtos');
+    } else {
       Alert.alert('Atenção', 'E-mail ou senha incorretos.');
     }
   };
@@ -56,8 +42,7 @@ if (emailLimpo === EMAIL_TESTE && senha === SENHA_TESTE) {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          
-          <View style={[styles.imageContainer, { height: height * 0.4 }]}>
+          <View style={[styles.imageContainer, { height: JVFheight * 0.4 }]}>
             <Image
               source={require('../../assets/logo_carro.jpg')}
               style={styles.image}
@@ -65,7 +50,6 @@ if (emailLimpo === EMAIL_TESTE && senha === SENHA_TESTE) {
             />
           </View>
 
-          
           <View style={styles.bottomCard}>
             <View style={styles.headerTitleContainer}>
               <Text style={styles.brandTitle}>Corneta e Cia</Text>
@@ -79,8 +63,8 @@ if (emailLimpo === EMAIL_TESTE && senha === SENHA_TESTE) {
                   style={styles.input}
                   placeholder="Email"
                   placeholderTextColor="#64748B"
-                  value={email}
-                  onChangeText={setEmail}
+                  value={JVFemail}
+                  onChangeText={JVFsetEmail}
                   keyboardType="email-address"
                   autoCapitalize="none"
                   autoCorrect={false}
@@ -97,19 +81,19 @@ if (emailLimpo === EMAIL_TESTE && senha === SENHA_TESTE) {
                   placeholder="Senha"
                   placeholderTextColor="#64748B"
                   secureTextEntry
-                  value={senha}
-                  onChangeText={setSenha}
+                  value={JVFsenha}
+                  onChangeText={JVFsetSenha}
                   autoCapitalize="none"
                   autoComplete="password"
                   textContentType="password"
                   returnKeyType="done"
-                  onSubmitEditing={handleLogin}
+                  onSubmitEditing={JVFhandleLogin}
                 />
               </View>
 
               <TouchableOpacity
                 style={styles.button}
-                onPress={handleLogin}
+                onPress={JVFhandleLogin}
                 activeOpacity={0.8}
               >
                 <Text style={styles.buttonText}>Entrar</Text>
