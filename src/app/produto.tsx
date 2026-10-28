@@ -3,13 +3,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { JVFgetProdutoPorId } from '../data/produtos';
-import { useApp } from '../context/AppContext';
+import { useJVFApp } from '../context/AppContext';
 
-export default function Produto() {
+export default function JVFProduto() {
   const JVFrouter = useRouter();
   const { id: JVFid } = useLocalSearchParams<{ id: string }>();
   const JVFproduto = JVFgetProdutoPorId(JVFid);
-  const { isFavorito: JVFisFavorito, toggleFavorito: JVFtoggleFavorito } = useApp();
+  const { isFavorito: JVFisFavorito, toggleFavorito: JVFtoggleFavorito } = useJVFApp();
 
   const JVFvoltar = () => {
     if (JVFrouter.canGoBack()) {
